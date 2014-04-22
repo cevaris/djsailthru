@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from setuptools import setup
+from setuptools import setup, find_packages
 import os
 
 __doc__ = """
@@ -18,6 +18,7 @@ setup(
     url="https://github.com/fxdgear/djsailthru",
     author="Nick Lang",
     author_email='nick@nicklang.com',
+    packages=[package for package in find_packages() if package.startswith('djsailthru')],
     install_requires=[
         'Django>=1.4',
         'sailthru-client>=2.1.3'
