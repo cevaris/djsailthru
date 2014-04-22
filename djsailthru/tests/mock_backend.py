@@ -1,5 +1,4 @@
 from mock import patch
-import json
 
 from django.test import TestCase
 from .utils import override_settings
@@ -12,7 +11,7 @@ class SailthruBackendMockTestCase(TestCase):
 
     class MockResponse:
         """requests.post return value mock sufficient for SailthruEmailBackend"""
-        def __init__(self, is_ok, get_status_code, json):
+        def __init__(self, is_ok=True, get_status_code=200, json=None):
             self._status_code = get_status_code
             self._json = json if json is not None else ['']
             self._is_ok = is_ok
@@ -32,11 +31,7 @@ class SailthruBackendMockTestCase(TestCase):
     def setUp(self):
         self.patch = patch('sailthru.sailthru_client.SailthruClient.api_post', autospec=True)
         self.mock_api_post = self.patch.start()
-        self.mock_api_post.return_value = self.MockResponse(
-            is_ok=True,
-            get_status_code=200,
-            json=json.dumps({'email': 'nick@simpleenergy.com', 'send_id': 'UxZ-C_3VrAVBAAhS', 'send_key': None, 'status': 'unknown', 'template': 'Forgot Password'}),
-        )
+        self.mock_api_post.return_value = self.MockResponse()
 
     def assert_sailthru_called(self):
         if self.mock_api_post.call_args is None:

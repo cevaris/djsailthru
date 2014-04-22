@@ -7,32 +7,20 @@ class TestSailthruEamilMessage(SailthruBackendMockTestCase):
         super(TestSailthruEamilMessage, self).setUp()
         self.message = SailthruEmailMessage('foo@bar.com', 'Email Template')
 
-    def test_send_mail(self):
+    def test_send_mail_without_vars(self):
         self.message.send()
         self.assert_sailthru_called()
         data = self.get_api_call_data()
         self.assertEqual(data['template'], 'Email Template')
         self.assertEqual(data['email'], 'foo@bar.com')
+        self.assertEqual(data['vars'], {})
 
-
-
-
-# def mock_sailthru_response(**kwargs):
-#     """
-#     Helper function for mocking the response object returned from the
-#     sailthru API.
-#     """
-#     response = mock.Mock(spec=SailthruResponse, **kwargs)
-#     return response
-
-
-# MockSendSailthruEmail = mock_a_thing(
-#     'sailthru.sailthru_client.SailthruClient.api_post',
-#     return_value=mock_sailthru_response(**{
-#         'get_body.return_value': {'email': 'nick@simpleenergy.com', 'send_id': 'UxZ-C_3VrAVBAAhS', 'send_key': None, 'status': 'unknown', 'template': 'Forgot Password'},
-#         'is_ok.return_value': True,
-#         'get_status_code.return_value': 200,
-#         'json': {'email': 'nick@simpleenergy.com', 'send_id': 'UxZ-C_3VrAVBAAhS', 'send_key': None, 'status': 'unknown', 'template': 'Forgot Password'},
-#     }),
-
-# )
+    def test_send_email_with_vars(self):
+        params = {'foo': 'bar'}
+        message = SailthruEmailMessage('foo@bar.com', 'Email Template', vars=params)
+        message.send()
+        self.assert_sailthru_called()
+        data = self.get_api_call_data()
+        self.assertEqual(data['template'], 'Email Template')
+        self.assertEqual(data['email'], 'foo@bar.com')
+        self.assertEqual(data['vars'], {'vars': params})
