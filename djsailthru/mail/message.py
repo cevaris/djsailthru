@@ -13,3 +13,6 @@ class SailthruEmailMessage(EmailMessage):
     def send(self, fail_silently=False):
         """Sends the email message."""
         return self.get_connection(fail_silently).send_messages([self])
+
+    def message(self):
+        pass

@@ -28,7 +28,7 @@ def read(fname):
 
 setup(
     name='djsailthru',
-    version="0.0.3",
+    version="0.0.4",
     description=__doc__,
     long_description=read('README.rst'),
     url="https://github.com/fxdgear/djsailthru",
