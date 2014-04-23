@@ -19,7 +19,10 @@ class SailthruEmailMessage(EmailMessage):
         This allows SailthruEmailMessage to function within Django's
         localmem EmailBackend when running tests
         """
-        pass
+        return self
 
     def recipients(self):
         return self.email_address
+
+    def as_bytes(self):
+        return self.data
