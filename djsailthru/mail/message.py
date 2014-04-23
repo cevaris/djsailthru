@@ -20,3 +20,6 @@ class SailthruEmailMessage(EmailMessage):
         localmem EmailBackend when running tests
         """
         pass
+
+    def recipients(self):
+        return self.email_address
