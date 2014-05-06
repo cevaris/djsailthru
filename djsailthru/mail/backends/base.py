@@ -30,7 +30,11 @@ class SailthruEmailBackend(BaseEmailBackend):
         if not isinstance(email_message, SailthruEmailMessage):
             raise TypeError('`email_message is not of type `SailthruEmailMessage')
 
-        response = self.sailthru_client.api_post("send", email_message.data)
+        response = self.sailthru_client.send(
+            email_message.template_name,
+            email_message.email_address,
+            _vars=email_message.vars.get('vars')
+        )
         email_message.sailthru_response = None
         if response.is_ok():
             email_message.sailthru_response = response.get_body()

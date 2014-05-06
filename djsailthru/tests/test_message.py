@@ -27,7 +27,7 @@ class TestSailthruEamilMessage(SailthruBackendMockTestCase):
         data = self.get_api_call_data()
         self.assertEqual(data['template'], 'Email Template')
         self.assertEqual(data['email'], 'foo@bar.com')
-        self.assertEqual(data['vars'], {'vars': params})
+        self.assertEqual(data['vars'], params)
 
     def test_send_email_bad_email(self):
         message = SailthruEmailMessage('foo@barcom', 'Email Template')
