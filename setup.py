@@ -20,7 +20,7 @@ setup(
     author_email='nick@nicklang.com',
     packages=[package for package in find_packages() if package.startswith('djsailthru')],
     install_requires=[
-        'Django==1.6.3',
+        'Django>=1.6.3,<1.8',
         'ipdb==0.8',
         'mock==1.0.1',
         'sailthru-client==2.1.3',
